@@ -1,15 +1,15 @@
+
+
 import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Main {
+    public Main() {
+    }
+
     public static void main(String[] args) {
         Scanner inputScanner = new Scanner(System.in);
         int pilihan = 0;
-        String username;
-        String password;
-
-        String nama;
-        BigInteger nim;
 
         String dataUsernameAdmin = "Admin022";
         String dataPasswordAdmin = "Password022";
@@ -21,67 +21,70 @@ public class Main {
         System.out.println("2. Mahasiswa");
         System.out.print("Masukkan pilihan : ");
         pilihan = inputScanner.nextInt();
+
         inputScanner.nextLine();
 
         switch (pilihan) {
             case 1:
                 System.out.print("Masukkan Username : ");
-                username = inputScanner.nextLine();
-
+                String username = inputScanner.nextLine();
                 System.out.print("Masukkan Password : ");
-                password = inputScanner.nextLine();
-
+                String password = inputScanner.nextLine();
                 if (username.equals(dataUsernameAdmin) && password.equals(dataPasswordAdmin)) {
                     System.out.println("Login Admin Berhasil");
-                } else  {
+                    break;
+                } else {
                     do {
                         System.out.println("Login gagal! Username atau password salah.\n");
-
                         System.out.print("Masukkan Username : ");
                         username = inputScanner.nextLine();
 
                         System.out.print("Masukkan Password : ");
                         password = inputScanner.nextLine();
 
-                        if (username.equals(dataUsernameAdmin) && password.equals(dataPasswordAdmin)){
+                        if (username.equals(dataUsernameAdmin) && password.equals(dataPasswordAdmin)) {
                             System.out.println("Login Admin Berhasil!");
                         }
-                    } while (!username.equals(dataUsernameAdmin) || !password.equals(dataPasswordAdmin));
+
+                    } while(!username.equals(dataUsernameAdmin) || !password.equals(dataPasswordAdmin));
+
+                    return;
                 }
-                break;
-            case 2 :
+            case 2:
                 System.out.print("Masukkan Nama Mahasiswa : ");
-                nama = inputScanner.nextLine();
+                String nama = inputScanner.nextLine();
+
                 System.out.print("Masukkan NIM Mahasiswa : ");
-                nim = inputScanner.nextBigInteger();
+                BigInteger nim = inputScanner.nextBigInteger();
+
                 inputScanner.nextLine();
 
-                if (nama.equals(dataNamaMahasiswa) && nim.equals(dataNimMahasiswa)){
+                if (nama.equals(dataNamaMahasiswa) && nim.equals(dataNimMahasiswa)) {
                     System.out.println("Login Mahasiswa Berhasil!");
                     System.out.println("Nama : " + dataNamaMahasiswa);
-                    System.out.println("NIM : " + dataNimMahasiswa);
+                    System.out.println("NIM : " + String.valueOf(dataNimMahasiswa));
+                    break;
                 } else {
                     do {
                         System.out.println("Login gagal! Nama atau NIM salah!");
                         System.out.print("Masukkan Nama : ");
                         nama = inputScanner.nextLine();
+
                         System.out.print("Masukkan NIM : ");
                         nim = inputScanner.nextBigInteger();
+                        
                         inputScanner.nextLine();
-
                         if (nama.equals(dataNamaMahasiswa) && nim.equals(dataNimMahasiswa)) {
                             System.out.println("Login Mahasiswa Berhasil!");
                             System.out.println("Nama : " + dataNamaMahasiswa);
-                            System.out.println("NIM : " + dataNimMahasiswa);
+                            System.out.println("NIM : " + String.valueOf(dataNimMahasiswa));
                         }
-                    } while (!nama.equals(dataNamaMahasiswa) || !nim.equals(dataNimMahasiswa));
+                    } while(!nama.equals(dataNamaMahasiswa) || !nim.equals(dataNimMahasiswa));
+
+                    return;
                 }
-
-                break;
-
             default:
                 System.out.println("Pilihan tidak valid!");
-                break;
         }
 
     }
