@@ -1,26 +1,31 @@
 import java.math.BigInteger;
 
-public class Mahasiswa {
-    String nama;
-    BigInteger nim;
+class Mahasiswa extends  User{
+    private String nama;
+    private String nim;
 
-    String setNama;
-    BigInteger setNim;
-
-    public  Mahasiswa() {
-
+    public Mahasiswa(String nama, String nim) {
+        super(nama, nim);
     }
 
-    Boolean login(){
-        boolean status = false;
-        if (this.nama.equals(this.setNama) && this.nim.equals(this.setNim)){
-            status = true;
-        }
-        return status;
+    public void setNama(String nama){
+        this.nama = nama;
     }
 
-    void displayInfo(){
-        System.out.println("Nama : " + this.setNama);
-        System.out.println("NIM : " + String.valueOf(this.setNim));
+    public void setNim(String nim){
+        this.nim = nim;
     }
+
+    @Override
+    public Boolean login(User users){
+        return users.getNama().equals(this.nama)&&users.getNim().equals(this.nim);
+    }
+
+    @Override
+    public void displayInfo(User users){
+        System.out.println("\nAnda login sebagai : ");
+        System.out.println("Nama : " + users.getNama());
+        System.out.println("NIM : " + users.getNim());
+    }
+
 }

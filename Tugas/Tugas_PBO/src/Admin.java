@@ -1,19 +1,28 @@
-import java.math.BigInteger;
+class Admin extends User{
+    private String username;
+    private String password;
 
-public class Admin {
-    String username;
-    String password;
+    public Admin(String nama, String nim){
+        super(nama, nim);
+    }
 
-    String setUsername;
-    String setPassword;
+    public void setUsername(String username){
+        this.username = username;
+    }
 
-    public Admin(){}
+    public void setPassword(String password){
+        this.password = password;
+    }
 
-    Boolean login(){
-        boolean status = false;
-        if (this.username.equals(this.setUsername) && this.password.equals(this.setPassword)){
-            status = true;
-        }
-        return status;
+    @Override
+    public Boolean login(User users){
+        return users.getNama().equals(this.username) && users.getNim().equals(this.password);
+    }
+
+    @Override
+    public void displayInfo(User users){
+        System.out.println("\nAnda login sebagai :");
+        System.out.println("Nama : " + users.getNama());
+//        System.out.println("NIM : " + this.nim);
     }
 }

@@ -1,19 +1,13 @@
 import java.math.BigInteger;
 import java.util.Scanner;
 
-public class LoginSystem {
+class LoginSystem {
     Scanner inputScanner = new Scanner(System.in);
-    Admin admin = new Admin();
-    Mahasiswa mahasiswa = new Mahasiswa();
+    Admin admin = new Admin("Admin022", "Password022");
+    Mahasiswa mahasiswa = new Mahasiswa("Ahmadfahmy", "202410370110022");
     int pilihan = 0;
 
     public LoginSystem(){
-        admin.setUsername = "Admin022";
-        admin.setPassword = "Password022";
-
-        mahasiswa.setNama = "Ahmad Fahmy";
-        mahasiswa.setNim = new BigInteger("202410370110022");
-
         System.out.println("1. Admin");
         System.out.println("2. Mahasiswa");
         System.out.print("Masukkan pilihan : ");
@@ -24,64 +18,62 @@ public class LoginSystem {
         switch (pilihan) {
             case 1:
                 System.out.print("Masukkan Username : ");
-                admin.username = inputScanner.nextLine();
+                admin.setUsername(inputScanner.nextLine());
 
                 System.out.print("Masukkan Password : ");
-                admin.password = inputScanner.nextLine();
+                admin.setPassword(inputScanner.nextLine());
 
-                if (admin.login()) {
+                if (admin.login(admin)) {
                     System.out.println("Login Admin Berhasil");
+                    admin.displayInfo(admin);
                     break;
                 } else {
                     do {
                         System.out.println("Login gagal! Username atau password salah.\n");
 
                         System.out.print("Masukkan Username : ");
-                        admin.username = inputScanner.nextLine();
+                        admin.setUsername(inputScanner.nextLine());
 
                         System.out.print("Masukkan Password : ");
-                        admin.password = inputScanner.nextLine();
+                        admin.setPassword(inputScanner.nextLine());
 
-                        if (admin.login()) {
+                        if (admin.login(admin)) {
                             System.out.println("Login Admin Berhasil!");
+                            admin.displayInfo(admin);
                         }
 
-                    } while(!admin.login());
-
-                    return;
+                    } while(!admin.login(admin));
                 }
             case 2:
                 System.out.print("Masukkan Nama Mahasiswa : ");
-                mahasiswa.nama = inputScanner.nextLine();
+                mahasiswa.setNama(inputScanner.nextLine());
 
                 System.out.print("Masukkan NIM Mahasiswa : ");
-                mahasiswa.nim = inputScanner.nextBigInteger();
+                mahasiswa.setNim(inputScanner.nextLine());
 
-                inputScanner.nextLine();
 
-                if (mahasiswa.login()) {
+                if (mahasiswa.login(mahasiswa)) {
                     System.out.println("Login Mahasiswa Berhasil!");
-                    mahasiswa.displayInfo();
+                    mahasiswa.displayInfo(mahasiswa);
                     break;
                 } else {
                     do {
                         System.out.println("Login gagal! Nama atau NIM salah!");
                         System.out.print("Masukkan Nama : ");
-                        mahasiswa.nama = inputScanner.nextLine();
+                        mahasiswa.setNama(inputScanner.nextLine());
 
                         System.out.print("Masukkan NIM : ");
-                        mahasiswa.nim = inputScanner.nextBigInteger();
+                        mahasiswa.setNim(inputScanner.nextLine());
 
-                        inputScanner.nextLine();
-                        if (mahasiswa.login()) {
+                        if (mahasiswa.login(mahasiswa)) {
                             System.out.println("Login Mahasiswa Berhasil!");
-                            System.out.println("Nama : " + mahasiswa.setNama);
-                            System.out.println("NIM : " + String.valueOf(mahasiswa.setNim));
+                            mahasiswa.displayInfo(mahasiswa);
                         }
-                    } while(!mahasiswa.login());
+                    } while(!mahasiswa.login(mahasiswa));
 
                     return;
                 }
+//                return;
             default:
                 System.out.println("Pilihan tidak valid!");
         }
