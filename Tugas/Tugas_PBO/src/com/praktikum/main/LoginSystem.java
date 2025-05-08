@@ -1,11 +1,19 @@
-import java.math.BigInteger;
+package com.praktikum.main;
+
+import com.praktikum.users.*;
+
 import java.util.Scanner;
 
-class LoginSystem {
+public class LoginSystem {
+
+//    User user = new Admin("Admin022", "Password022");
+//    User user = new Mahasiswa("Ahmadfahmy", "202410370110022");
+
     Scanner inputScanner = new Scanner(System.in);
+    User user;
     Admin admin = new Admin("Admin022", "Password022");
     Mahasiswa mahasiswa = new Mahasiswa("Ahmadfahmy", "202410370110022");
-    int pilihan = 0;
+    int pilihan;
 
     public LoginSystem(){
         System.out.println("1. Admin");
@@ -23,9 +31,12 @@ class LoginSystem {
                 System.out.print("Masukkan Password : ");
                 admin.setPassword(inputScanner.nextLine());
 
-                if (admin.login(admin)) {
+                user = admin;
+
+                if (user.login(admin)) {
                     System.out.println("Login Admin Berhasil");
-                    admin.displayInfo(admin);
+                    user.displayInfo(admin);
+                    user.displayAppMenu();
                     break;
                 } else {
                     do {
@@ -37,9 +48,10 @@ class LoginSystem {
                         System.out.print("Masukkan Password : ");
                         admin.setPassword(inputScanner.nextLine());
 
-                        if (admin.login(admin)) {
+                        if (user.login(admin)) {
                             System.out.println("Login Admin Berhasil!");
-                            admin.displayInfo(admin);
+                            user.displayInfo(admin);
+                            user.displayAppMenu();
                         }
 
                     } while(!admin.login(admin));
@@ -51,10 +63,12 @@ class LoginSystem {
                 System.out.print("Masukkan NIM Mahasiswa : ");
                 mahasiswa.setNim(inputScanner.nextLine());
 
+                user = mahasiswa;
 
-                if (mahasiswa.login(mahasiswa)) {
+                if (user.login(mahasiswa)) {
                     System.out.println("Login Mahasiswa Berhasil!");
-                    mahasiswa.displayInfo(mahasiswa);
+                    user.displayInfo(mahasiswa);
+                    user.displayAppMenu();
                     break;
                 } else {
                     do {
@@ -65,9 +79,10 @@ class LoginSystem {
                         System.out.print("Masukkan NIM : ");
                         mahasiswa.setNim(inputScanner.nextLine());
 
-                        if (mahasiswa.login(mahasiswa)) {
+                        if (user.login(mahasiswa)) {
                             System.out.println("Login Mahasiswa Berhasil!");
-                            mahasiswa.displayInfo(mahasiswa);
+                            user.displayInfo(mahasiswa);
+                            user.displayAppMenu();
                         }
                     } while(!mahasiswa.login(mahasiswa));
 
