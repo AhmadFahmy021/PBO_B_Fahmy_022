@@ -1,8 +1,12 @@
 package com.praktikum.users;
 
 import com.praktikum.actions.MahasiswaActions;
+import com.praktikum.data.Item;
 import com.praktikum.main.LoginSystem;
 
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class Mahasiswa extends User implements MahasiswaActions {
@@ -22,15 +26,24 @@ public class Mahasiswa extends User implements MahasiswaActions {
     }
 
     @Override
-    public Boolean login(User users){
-        return users.getNama().equals(this.nama)&&users.getNim().equals(this.nim);
+    public Boolean login(ArrayList<User> list){
+        for (User data : list){
+            if (data instanceof Mahasiswa){
+                return data.getNama().equals(this.nama) && data.getNim().equals(this.nim);
+            }
+        }
+        return false;
     }
 
     @Override
-    public void displayInfo(User users){
+    public void displayInfo(ArrayList<User> list){
         System.out.println("\nAnda login sebagai : ");
-        System.out.println("Nama : " + users.getNama());
-        System.out.println("NIM : " + users.getNim());
+        for (User data : list){
+            if (data instanceof Mahasiswa){
+                System.out.println("Nama : " + data.getNama());
+                System.out.println("NIM : " + data.getNim());
+            }
+        }
     }
 
     @Override
@@ -40,15 +53,32 @@ public class Mahasiswa extends User implements MahasiswaActions {
         String lokasiTerakhir;
 
         Scanner inputScanner = new Scanner(System.in);
+        try {
+            boolean status = false;
 
-        System.out.println("\n=== Masukkan Informasi Barang Temuan ===");
-        System.out.print("Masukkan nama barang      : ");
-        namaBarang = inputScanner.nextLine();
-        System.out.print("Masukkan deskripsi barang : ");
-        deskripsiBarang = inputScanner.nextLine();
-        System.out.print("Masukkan lokasi terakhir  : ");
-        lokasiTerakhir = inputScanner.nextLine();
+            do {
+                System.out.println("\n=== Masukkan Informasi Barang Temuan ===");
+                System.out.print("Masukkan nama barang      : ");
+                namaBarang = inputScanner.nextLine();
+                System.out.print("Masukkan deskripsi barang : ");
+                deskripsiBarang = inputScanner.nextLine();
+                System.out.print("Masukkan lokasi terakhir  : ");
+                lokasiTerakhir = inputScanner.nextLine();
 
+                if (namaBarang.trim().isEmpty() ||  deskripsiBarang.trim().isEmpty() || lokasiTerakhir.trim().isEmpty()){
+                    status = true;
+                }else {
+                    status = false;
+                }
+            }while(status);
+
+        } catch (InputMismatchException e) {
+            throw new RuntimeException(e);
+        } catch (NullPointerException e){
+            throw new RuntimeException(e);
+        }
+
+        LoginSystem.reportedItems.add(new Item(namaBarang, deskripsiBarang, lokasiTerakhir, "Reported"));
         System.out.println("\n+++ Detail Barang +++");
         System.out.println("Nama Barang        : "+namaBarang);
         System.out.println("Deskripsi Barang   : "+deskripsiBarang);
@@ -58,7 +88,20 @@ public class Mahasiswa extends User implements MahasiswaActions {
 
     @Override
     public void viewReportedItems() {
-        System.out.println(">> Fitur ini belum tersedia <<");
+        if (LoginSystem.reportedItems.size() == 0){
+            System.out.println("Belum ada laporan barang");
+        } else {
+            ListIterator<Item> daftarItems = LoginSystem.reportedItems.listIterator();
+            while (daftarItems.hasNext()){
+                Item data = daftarItems.next();
+
+                if (data.getStatus() == "Reported") {
+                    System.out.println("Nama Barang : " +data.getName());
+                    System.out.println("Deskripsi Barang : " +data.getDescription());
+                    System.out.println("Lokasi Terakhir Barang"+data.getLocation());
+                }
+            }
+        }
     }
 
 
@@ -74,6 +117,7 @@ public class Mahasiswa extends User implements MahasiswaActions {
             System.out.println("2. Lihat Daftar Laporan");
             System.out.println("0. Logout");
             int pilihan;
+            System.out.print("Masukkan pilihan menu : ");
             pilihan = inputScanner.nextInt();
             switch (pilihan) {
                 case 1 :

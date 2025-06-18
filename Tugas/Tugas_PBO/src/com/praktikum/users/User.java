@@ -1,5 +1,7 @@
 package com.praktikum.users;
 
+import java.util.ArrayList;
+
 public abstract class User {
     private String nama;
     private String nim;
@@ -26,11 +28,11 @@ public abstract class User {
         return nim;
     }
 
-    public abstract Boolean login(User user);
+    public abstract Boolean login(ArrayList<User> list);
 
     public abstract void displayAppMenu();
 
-    public void displayInfo(User users){
+    public void displayInfo(ArrayList<User> list){
         System.out.println("Nama : " + this.nama);
         System.out.println("NIM : " + this.nim);
     }

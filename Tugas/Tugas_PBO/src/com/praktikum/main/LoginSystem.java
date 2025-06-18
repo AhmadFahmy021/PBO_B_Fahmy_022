@@ -1,13 +1,16 @@
 package com.praktikum.main;
 
+import com.praktikum.data.Item;
 import com.praktikum.users.*;
+import com.sun.tools.javac.Main;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LoginSystem {
 
-//    User user = new Admin("Admin022", "Password022");
-//    User user = new Mahasiswa("Ahmadfahmy", "202410370110022");
+    public static ArrayList<User> userList = new ArrayList<>();
+    public static ArrayList<Item> reportedItems = new ArrayList<>();
 
     Scanner inputScanner = new Scanner(System.in);
     User user;
@@ -16,6 +19,9 @@ public class LoginSystem {
     int pilihan;
 
     public LoginSystem(){
+        userList.add(new Admin("Admin022", "Password022"));
+        userList.add(new Mahasiswa("Ahmadfahmy", "202410370110022"));
+
         System.out.println("1. Admin");
         System.out.println("2. Mahasiswa");
         System.out.print("Masukkan pilihan : ");
@@ -33,9 +39,10 @@ public class LoginSystem {
 
                 user = admin;
 
-                if (user.login(admin)) {
+
+                if (admin.login(userList)) {
                     System.out.println("Login Admin Berhasil");
-                    user.displayInfo(admin);
+                    user.displayInfo(userList);
                     user.displayAppMenu();
                     break;
                 } else {
@@ -48,14 +55,15 @@ public class LoginSystem {
                         System.out.print("Masukkan Password : ");
                         admin.setPassword(inputScanner.nextLine());
 
-                        if (user.login(admin)) {
+                        if (admin.login(userList)) {
                             System.out.println("Login Admin Berhasil!");
-                            user.displayInfo(admin);
+                            user.displayInfo(userList);
                             user.displayAppMenu();
                         }
 
-                    } while(!admin.login(admin));
+                    } while(!admin.login(userList));
                 }
+                break;
             case 2:
                 System.out.print("Masukkan Nama Mahasiswa : ");
                 mahasiswa.setNama(inputScanner.nextLine());
@@ -65,9 +73,9 @@ public class LoginSystem {
 
                 user = mahasiswa;
 
-                if (user.login(mahasiswa)) {
+                if (user.login(userList)) {
                     System.out.println("Login Mahasiswa Berhasil!");
-                    user.displayInfo(mahasiswa);
+                    user.displayInfo(userList);
                     user.displayAppMenu();
                     break;
                 } else {
@@ -79,18 +87,19 @@ public class LoginSystem {
                         System.out.print("Masukkan NIM : ");
                         mahasiswa.setNim(inputScanner.nextLine());
 
-                        if (user.login(mahasiswa)) {
+                        if (user.login(userList)) {
                             System.out.println("Login Mahasiswa Berhasil!");
-                            user.displayInfo(mahasiswa);
+                            user.displayInfo(userList);
                             user.displayAppMenu();
                         }
-                    } while(!mahasiswa.login(mahasiswa));
+                    } while(!mahasiswa.login(userList));
 
                     return;
                 }
-//                return;
+//                break;
             default:
                 System.out.println("Pilihan tidak valid!");
         }
     }
 }
+
